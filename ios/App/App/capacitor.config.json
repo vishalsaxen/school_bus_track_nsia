@@ -1,0 +1,8 @@
+{
+	"appId": "com.northstar.giazochaloschool",
+	"appName": "GiaZo Chalo School",
+	"webDir": "www",
+	"packageClassList": [
+		"CAPBrowserPlugin"
+	]
+}

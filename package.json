@@ -1,0 +1,19 @@
+{
+  "name": "giazo-chalo-school",
+  "version": "1.0.0",
+  "description": "GiaZo Chalo School - live bus tracker app for North Star International Academy",
+  "private": true,
+  "scripts": {
+    "sync": "cap sync android",
+    "open:android": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/browser": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.6.9"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  }
+}

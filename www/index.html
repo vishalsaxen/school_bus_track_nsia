@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>North Star International Academy — Bus Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12213B;
+    --paper:#F6F7FA;
+    --panel:#FFFFFF;
+    --slate:#5C6B80;
+    --slate-light:#8D98A8;
+    --line:#E2E6ED;
+    --blue:#2E5FD9;
+    --blue-dim:#E9EFFC;
+    --amber:#E7A93C;
+    --amber-dim:#FCF1DE;
+    --alert:#B54A3F;
+    --alert-dim:#FBEAE7;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; padding:0; height:100%; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    overscroll-behavior:none;
+  }
+  h1,h2,h3{ font-family:'Space Grotesk',sans-serif; margin:0; letter-spacing:-0.01em; }
+
+  .app{
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    min-height:100dvh;
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* ---------- Screens ---------- */
+  .screen{
+    padding:28px 22px 32px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+    animation: slide-in 0.22s ease;
+  }
+  @keyframes slide-in{
+    from{ opacity:0; transform:translateX(14px); }
+    to{ opacity:1; transform:translateX(0); }
+  }
+  .hidden{ display:none !important; }
+
+  /* ---------- Wordmark ---------- */
+  .wordmark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:34px;
+    background:none;
+    border:none;
+    padding:0;
+    cursor:pointer;
+    text-align:left;
+    font-family:'Inter',sans-serif;
+  }
+  .mark{
+    width:34px; height:34px;
+    flex-shrink:0;
+  }
+  .school-name{ font-size:15px; font-weight:600; line-height:1.25; color:var(--ink); }
+  .school-name .line2{ color:var(--slate); font-weight:500; font-size:13px; }
+
+  /* ---------- Landing footer ---------- */
+  .landing-footer{
+    margin-top:auto;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .social-row{
+    display:flex;
+    gap:10px;
+  }
+  .social-icon{
+    width:38px; height:38px;
+    border-radius:10px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .social-icon:active{ background:var(--blue-dim); border-color:var(--blue); }
+  .emergency-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:var(--alert-dim);
+    border-radius:12px;
+    padding:12px 14px;
+  }
+  .emergency-icon{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:var(--alert);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .emergency-text{ flex:1; min-width:0; }
+  .emergency-label{ font-size:11px; font-weight:600; color:var(--alert); text-transform:uppercase; letter-spacing:0.03em; }
+  .emergency-number{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:16px;
+    font-weight:700;
+    color:var(--ink);
+    text-decoration:none;
+    display:block;
+    margin-top:1px;
+  }
+
+  /* ---------- Back row ---------- */
+  .back-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:26px;
+    gap:12px;
+  }
+  .back-btn{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:none;
+    border:none;
+    color:var(--slate);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    font-weight:500;
+    cursor:pointer;
+    padding:6px 0;
+  }
+  .back-btn:active{ color:var(--ink); }
+  .back-row h2{ font-size:16px; }
+
+  /* ---------- Bus select screen ---------- */
+  .prompt{ font-size:19px; font-weight:600; margin-bottom:20px; }
+  .bus-list{ display:flex; flex-direction:column; gap:14px; }
+
+  .bus-badge{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    border:none;
+    border-radius:14px;
+    padding:20px 22px;
+    cursor:pointer;
+    text-align:left;
+    font-family:'Inter',sans-serif;
+    transition:transform .08s ease;
+  }
+  .bus-badge:active{ transform:scale(0.98); }
+  .bus-badge.blue{ background:var(--blue); }
+  .bus-badge.amber{ background:var(--amber); }
+  .bus-num{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:36px;
+    font-weight:700;
+    color:#fff;
+    width:52px;
+    flex-shrink:0;
+  }
+  .bus-meta{ color:#fff; }
+  .bus-meta .label{ font-size:15px; font-weight:600; }
+  .bus-meta .sub{ font-size:12.5px; opacity:0.85; margin-top:2px; }
+
+  /* ---------- Map choice screen ---------- */
+  .bus-info-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .bus-info-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .bus-info-label{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:12.5px;
+    color:var(--slate);
+  }
+  .bus-info-value{
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+    text-align:right;
+  }
+  a.bus-info-value{ color:var(--blue); text-decoration:none; }
+
+  .tile-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .map-tile{
+    aspect-ratio:1 / 1;
+    border-radius:14px;
+    border:1.5px solid var(--line);
+    background:var(--panel);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:16px;
+    cursor:pointer;
+    text-align:center;
+    font-family:'Inter',sans-serif;
+    transition:transform .08s ease, border-color .12s ease, background .12s ease;
+  }
+  .map-tile:active{ transform:scale(0.97); }
+  .map-tile.legacy:hover, .map-tile.legacy:active{ border-color:var(--blue); background:var(--blue-dim); }
+  .map-tile.google:hover, .map-tile.google:active{ border-color:var(--amber); background:var(--amber-dim); }
+  .tile-icon{ width:34px; height:34px; }
+  .tile-title{ font-size:13.5px; font-weight:600; }
+  .tile-sub{ font-size:11px; color:var(--slate); }
+
+  /* ---------- Map view screen ---------- */
+  #screen-map{ padding:0; }
+  .map-header{
+    padding:16px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    border-bottom:1px solid var(--line);
+    background:var(--panel);
+  }
+  .map-header-title{ font-size:13.5px; font-weight:600; }
+  .map-header-sub{ font-size:11.5px; color:var(--slate); }
+  .open-ext{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--blue);
+    text-decoration:none;
+    white-space:nowrap;
+    flex-shrink:0;
+    padding:6px 10px;
+    border-radius:8px;
+    border:1px solid var(--blue-dim);
+  }
+  .map-frame-wrap{
+    flex:1;
+    position:relative;
+    background:#E9EBEF;
+  }
+  .map-frame-wrap iframe{
+    width:100%;
+    height:100%;
+    border:none;
+    display:block;
+    position:absolute;
+    inset:0;
+  }
+  .status-panel{
+    padding:14px 18px;
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px 16px;
+  }
+  .status-item{ min-width:0; }
+  .status-item-head{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:3px;
+  }
+  .status-item-head svg{ flex-shrink:0; }
+  .status-item-label{
+    font-size:11px;
+    font-weight:600;
+    color:var(--slate);
+  }
+  .status-item-value{
+    font-size:13px;
+    font-weight:500;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .status-item.full{ grid-column:1 / -1; }
+  .status-panel.loading .status-item-value{ color:var(--slate-light); }
+  #google-map-canvas{
+    position:absolute;
+    inset:0;
+  }
+  .map-fallback-note{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    padding:14px 18px;
+    background:rgba(18,33,59,0.92);
+    color:#fff;
+    font-size:12px;
+    text-align:center;
+    line-height:1.5;
+  }
+  .map-fallback-note a{ color:#fff; font-weight:600; }
+  .map-error{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px; text-align:center;
+    font-size:13px; color:var(--slate);
+  }
+
+  /* ---------- Small icons via inline SVG (no external deps) ---------- */
+  svg{ display:block; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SCREEN 1: Select bus -->
+  <section class="screen" id="screen-bus">
+    <button class="wordmark" onclick="openExternal('https://nsiacademy.org/')">
+      <svg class="mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 2 L20.2 13.8 L32 17 L20.2 20.2 L17 32 L13.8 20.2 L2 17 L13.8 13.8 Z" fill="#E7A93C"/>
+      </svg>
+      <div class="school-name">
+        North Star<br/>
+        <span class="line2">International Academy</span>
+      </div>
+    </button>
+
+    <div class="prompt">Select your bus</div>
+
+    <div class="bus-list">
+      <button class="bus-badge blue" onclick="selectBus(1)">
+        <span class="bus-num">1</span>
+        <span class="bus-meta">
+          <span class="label">Bus No. 1</span><br/>
+          <span class="sub">View live location</span>
+        </span>
+      </button>
+
+      <button class="bus-badge amber" onclick="selectBus(3)">
+        <span class="bus-num">3</span>
+        <span class="bus-meta">
+          <span class="label">Bus No. 3</span><br/>
+          <span class="sub">View live location</span>
+        </span>
+      </button>
+    </div>
+
+    <div class="landing-footer">
+      <div class="social-row">
+        <button class="social-icon" onclick="openExternal('https://www.facebook.com/people/North-Star-International-Academy/61557685901088/')" aria-label="Facebook">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M11 2H9.2C7.4 2 6 3.4 6 5.2V7H4v3h2v5h3v-5h2.2l.8-3H9V5.4c0-.4.3-.7.7-.7H11V2Z" fill="#12213B"/></svg>
+        </button>
+        <button class="social-icon" onclick="openExternal('https://www.instagram.com/northstarinternationalacademy/')" aria-label="Instagram">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><rect x="2" y="2" width="13" height="13" rx="4" stroke="#12213B" stroke-width="1.4"/><circle cx="8.5" cy="8.5" r="3" stroke="#12213B" stroke-width="1.4"/><circle cx="12.2" cy="4.8" r="0.9" fill="#12213B"/></svg>
+        </button>
+        <button class="social-icon" onclick="openExternal('https://www.youtube.com/@NSIAPUNE')" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4.5" width="14" height="9" rx="2.5" stroke="#12213B" stroke-width="1.4"/><path d="M7.5 7.2 11 9l-3.5 1.8V7.2Z" fill="#12213B"/></svg>
+        </button>
+      </div>
+
+      <a class="emergency-row" href="tel:8655334323" style="text-decoration:none;">
+        <span class="emergency-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 2.5h2l1 3-1.5 1.2a8 8 0 0 0 4.3 4.3l1.2-1.5 3 1v2c0 .8-.7 1.4-1.5 1.3C6.9 13.2 2.8 9.1 2.2 4c-.1-.8.5-1.5 1.3-1.5Z" fill="#fff"/></svg>
+        </span>
+        <span class="emergency-text">
+          <span class="emergency-label">Emergency Contact</span>
+          <span class="emergency-number">8655334323</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: Choose map source -->
+  <section class="screen hidden" id="screen-map-choice">
+    <div class="back-row">
+      <button class="back-btn" onclick="goTo('screen-bus')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Bus No. <span id="choice-bus-num"></span>
+      </button>
+    </div>
+
+    <div class="prompt">Choose a map</div>
+
+    <div class="bus-info-card">
+      <div class="bus-info-row">
+        <span class="bus-info-label">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="#5C6B80" stroke-width="1.1"/><path d="M2.5 12c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4" stroke="#5C6B80" stroke-width="1.1" stroke-linecap="round"/></svg>
+          Driver
+        </span>
+        <span class="bus-info-value" id="choice-driver-name">—</span>
+      </div>
+      <div class="bus-info-row">
+        <span class="bus-info-label">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="#5C6B80" stroke-width="1.1"/><path d="M2.5 12c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4" stroke="#5C6B80" stroke-width="1.1" stroke-linecap="round"/></svg>
+          Care Taker
+        </span>
+        <span class="bus-info-value" id="choice-caretaker-name">—</span>
+      </div>
+      <div class="bus-info-row">
+        <span class="bus-info-label">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 2.5h1.5l.8 2.3-1.1.9a6 6 0 0 0 3.1 3.1l.9-1.1 2.3.8V10c0 .6-.5 1-1.1 1C5.7 10.5 3.5 8.3 3 4.6 2.9 4 3.4 3.5 3 2.5Z" stroke="#5C6B80" stroke-width="1.1" stroke-linejoin="round"/></svg>
+          Contact
+        </span>
+        <a class="bus-info-value" id="choice-contact-number" href="tel:">—</a>
+      </div>
+    </div>
+
+    <div class="tile-grid">
+      <button class="map-tile legacy" onclick="openMap('legacy')">
+        <svg class="tile-icon" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="26" height="22" rx="2" stroke="#2E5FD9" stroke-width="1.6"/>
+          <path d="M4 12H30" stroke="#2E5FD9" stroke-width="1.6"/>
+          <circle cx="17" cy="20" r="3.2" stroke="#2E5FD9" stroke-width="1.6"/>
+        </svg>
+        <span class="tile-title">Track.Letsgro</span>
+        <span class="tile-sub">Opens in browser</span>
+      </button>
+
+      <button class="map-tile google" onclick="openMap('google')">
+        <svg class="tile-icon" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 3C11.5 3 7 7.5 7 13c0 7.5 10 18 10 18s10-10.5 10-18c0-5.5-4.5-10-10-10Z" stroke="#E7A93C" stroke-width="1.6" stroke-linejoin="round"/>
+          <circle cx="17" cy="13" r="3.4" stroke="#E7A93C" stroke-width="1.6"/>
+        </svg>
+        <span class="tile-title">Google Maps</span>
+        <span class="tile-sub">Live map</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: Map view -->
+  <section class="screen hidden" id="screen-map">
+    <div class="map-header">
+      <button class="back-btn" onclick="goTo('screen-map-choice')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div style="flex:1; text-align:center;">
+        <div class="map-header-title">Bus No. <span id="view-bus-num"></span></div>
+        <div class="map-header-sub" id="view-source-label"></div>
+      </div>
+      <a class="open-ext" id="open-ext-link" href="#" target="_blank" rel="noopener">
+        Open ↗
+      </a>
+    </div>
+    <div class="status-panel loading" id="status-panel">
+      <div class="status-item">
+        <div class="status-item-head">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 9V5.5C2 4.67 2.67 4 3.5 4h7c.83 0 1.5.67 1.5 1.5V9M2 9h10M2 9v1.5c0 .28.22.5.5.5H3a.5.5 0 00.5-.5V10M12 9v1.5c0 .28-.22.5-.5.5H11a.5.5 0 01-.5-.5V10M4 6.5h1M9 6.5h1" stroke="#5C6B80" stroke-width="1.1" stroke-linecap="round"/></svg>
+          <span class="status-item-label">Vehicle Name</span>
+        </div>
+        <div class="status-item-value" id="status-vehicle">—</div>
+      </div>
+      <div class="status-item">
+        <div class="status-item-head">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#5C6B80" stroke-width="1.1"/><path d="M7 4v3l2 1.2" stroke="#5C6B80" stroke-width="1.1" stroke-linecap="round"/></svg>
+          <span class="status-item-label">Last Update</span>
+        </div>
+        <div class="status-item-value" id="status-updated">—</div>
+      </div>
+      <div class="status-item full">
+        <div class="status-item-head">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5c-2.2 0-4 1.8-4 4 0 3 4 7 4 7s4-4 4-7c0-2.2-1.8-4-4-4z" stroke="#5C6B80" stroke-width="1.1"/><circle cx="7" cy="5.5" r="1.3" stroke="#5C6B80" stroke-width="1.1"/></svg>
+          <span class="status-item-label">Location</span>
+        </div>
+        <div class="status-item-value" id="status-location">—</div>
+      </div>
+      <div class="status-item">
+        <div class="status-item-head">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#5C6B80" stroke-width="1.1"/><path d="M7 7l2.2-2.2" stroke="#5C6B80" stroke-width="1.1" stroke-linecap="round"/></svg>
+          <span class="status-item-label">Speed</span>
+        </div>
+        <div class="status-item-value" id="status-speed">—</div>
+      </div>
+      <div class="status-item">
+        <div class="status-item-head">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="7" rx="1" stroke="#5C6B80" stroke-width="1.1"/><path d="M5 12h4M7 9.5V12" stroke="#5C6B80" stroke-width="1.1" stroke-linecap="round"/></svg>
+          <span class="status-item-label">Status</span>
+        </div>
+        <div class="status-item-value" id="status-ignition">—</div>
+      </div>
+    </div>
+
+    <div class="map-frame-wrap" id="google-map-wrap">
+      <div id="google-map-canvas"></div>
+    </div>
+  </section>
+
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
