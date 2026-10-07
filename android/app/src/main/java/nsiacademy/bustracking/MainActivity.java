@@ -1,4 +1,4 @@
-package com.northstar.giazochaloschool;
+package nsiacademy.bustracking;
 
 import com.getcapacitor.BridgeActivity;
 

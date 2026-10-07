@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">NSIA Bus Tracking</string>
     <string name="title_activity_main">NSIA Bus Tracking</string>
-    <string name="package_name">com.northstar.giazochaloschool</string>
-    <string name="custom_url_scheme">com.northstar.giazochaloschool</string>
+    <string name="package_name">nsiacademy.bustracking</string>
+    <string name="custom_url_scheme">nsiacademy.bustracking</string>
 </resources>
