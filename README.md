@@ -1,4 +1,4 @@
-# GiaZo Chalo School
+# NSIA Bus Tracking
 
 A Capacitor-based Android app for North Star International Academy — lets parents/staff pick a bus (No. 1 or No. 3), then choose to view it either on Track.Letsgro's own page or as a live marker on Google Maps.
 
