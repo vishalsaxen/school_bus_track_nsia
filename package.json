@@ -1,7 +1,7 @@
 {
-  "name": "giazo-chalo-school",
+  "name": "nsia-bus-tracking",
   "version": "1.0.0",
-  "description": "GiaZo Chalo School - live bus tracker app for North Star International Academy",
+  "description": "NSIA Bus Tracking - live bus tracker app for North Star International Academy",
   "private": true,
   "scripts": {
     "sync": "cap sync android",

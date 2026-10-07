@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">GiaZo Chalo School</string>
-    <string name="title_activity_main">GiaZo Chalo School</string>
+    <string name="app_name">NSIA Bus Tracking</string>
+    <string name="title_activity_main">NSIA Bus Tracking</string>
     <string name="package_name">com.northstar.giazochaloschool</string>
     <string name="custom_url_scheme">com.northstar.giazochaloschool</string>
 </resources>
