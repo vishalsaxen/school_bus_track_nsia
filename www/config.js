@@ -11,7 +11,7 @@
       fails to respond.
    ========================================================================= */
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyCixTuCtfTIKNnoWpKgMEnuhQiTFfKMbWQ";
+const GOOGLE_MAPS_API_KEY = "AIzaSyCvkhaH7iJ2jp7fQeBDODzkwZ4YYFAr2k0";
 
 const BUS_CONFIG = {
   1: {
